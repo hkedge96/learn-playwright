@@ -7,6 +7,7 @@ test.beforeEach(async ({ page }) => {
 
 test('test', async ({ page }) => {
     await page.goto('https://study-test.byupathway.edu/');
+    await page.getByRole('button', { name: 'Yes' }).click();
     await page.getByRole('link', { name: 'Add Materials' }).click();
     await page.getByText('Test', { exact: true }).click();
     await page.getByRole('article').filter({ hasText: 'LLTEST - A Sample of' }).getByLabel('Download ePub').click();
