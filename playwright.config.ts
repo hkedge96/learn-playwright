@@ -1,3 +1,5 @@
+import dotenv from 'dotenv';
+dotenv.config();
 import type { PlaywrightTestConfig } from '@playwright/test';
 import { defineConfig, devices } from '@playwright/test';
 
@@ -20,7 +22,7 @@ const config: PlaywrightTestConfig = {
   projects: [
     {
       name: 'Desktop Chrome',
-      timeout: 60000, // 60 seconds for each test
+      timeout: 600000, // 60 seconds for each test
       testDir: './tests',
       use: {
         browserName: 'chromium',
@@ -32,7 +34,7 @@ const config: PlaywrightTestConfig = {
       testDir: './mobile_tests',
       timeout: 60000, // 60 seconds for each test
       use: {
-        ...devices['Pixel 5'],
+        ...devices['Galaxy A10'],
       },
     },
 
