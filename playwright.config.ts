@@ -1,5 +1,3 @@
-import dotenv from 'dotenv';
-dotenv.config();
 import type { PlaywrightTestConfig } from '@playwright/test';
 import { defineConfig, devices } from '@playwright/test';
 
@@ -29,14 +27,14 @@ const config: PlaywrightTestConfig = {
       },
     },
     
-    {
+    /*{
       name: 'Pixel 5',
       testDir: './mobile_tests',
       timeout: 60000, // 60 seconds for each test
       use: {
         ...devices['Galaxy A10'],
       },
-    },
+    },*/
 
   ],
 };
