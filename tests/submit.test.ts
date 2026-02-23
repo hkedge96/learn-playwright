@@ -1,7 +1,6 @@
 import { test as base , chromium} from '@playwright/test';
-import { login } from '../setup/login';
 
-
+//Persistent login
 const test = base.extend({
   context: async ({}, use) => {
     const context = await chromium.launchPersistentContext('./my-profile', {
@@ -42,8 +41,22 @@ test('test', async ({ page }) => {
     await page.locator('#taId-00818LA').fill('This is a test. ');
     await page.locator('#taId-00819LA').fill('This is a test. ');
     await page.getByRole('button', { name: 'Yes' }).click();
-    await page.getByRole('link', { name: ' Submit Assignment' }).click();
+    
+    const yesBtn = page.getByRole('button', { name: /^Yes$/i });
+    await yesBtn.waitFor({ state: 'visible' });
+
+    await Promise.all([
+    yesBtn.click(),
+    ]);
+
+    const submitLink = page.getByRole('link', { name: /Submit Assignment$/i });
+    await submitLink.waitFor({ state: 'visible' });
+    await Promise.all([
+    submitLink.click(),
+    ]);
+
     await page.getByRole('button', { name: 'OK', exact: true }).click();
+    //await page.pause();
 });
     
 

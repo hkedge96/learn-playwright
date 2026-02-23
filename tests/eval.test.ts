@@ -20,9 +20,10 @@ test('test', async ({ page }) => {
     await page.goto('https://study-test.byupathway.edu/');
     await page.locator('a.bookCard').nth(0).click();
     await page.getByRole('link', { name: 'BUS116 - Starting a business' }).click();
-    await page.getByRole('button', { name: 'Search' }).click();
-    await page.getByRole('textbox', { name: 'Search...' }).fill('submit');
-    await page.getByRole('textbox', { name: 'Search...' }).press('Enter');
-    await page.getByText('Start Here BUS116 - Starting a business assignment in the Submit section at the').click();
+    await page.getByRole('treeitem', { name: 'W03 Evaluation' }).click();
+    const page1Promise = page.waitForEvent('popup');
+    await page.getByRole('link', { name: ' Complete Evaluation' }).click();
+    const page1 = await page1Promise;
+    await page1.locator('.QuestionText').first().click();
     //await page.pause();
     });
