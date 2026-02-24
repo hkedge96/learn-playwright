@@ -1,14 +1,33 @@
-<testsuites id="" name="" tests="5" failures="0" skipped="0" errors="0" time="136.61731899999998">
-<testsuite name="tests\module.test.ts" timestamp="2026-02-24T18:43:58.023Z" hostname="Desktop Chrome" tests="5" failures="0" skipped="0" time="135.526" errors="0">
-<testcase name="download module" classname="tests\module.test.ts" time="29.784">
-</testcase>
-<testcase name="bookmark" classname="tests\module.test.ts" time="26.243">
-</testcase>
-<testcase name="evaluation" classname="tests\module.test.ts" time="27.99">
-</testcase>
-<testcase name="search" classname="tests\module.test.ts" time="25.009">
-</testcase>
-<testcase name="submit" classname="tests\module.test.ts" time="26.5">
+<testsuites id="" name="" tests="1" failures="1" skipped="0" errors="0" time="61.304496">
+<testsuite name="mobile_tests\mobileModule.test.ts" timestamp="2026-02-24T21:51:04.557Z" hostname="Galaxy A55" tests="1" failures="1" skipped="0" time="60.269" errors="0">
+<testcase name="submit" classname="mobile_tests\mobileModule.test.ts" time="60.269">
+<failure message="mobileModule.test.ts:80:6 submit" type="FAILURE">
+<![CDATA[  [Galaxy A55] › mobile_tests\mobileModule.test.ts:80:6 › submit ───────────────────────────────────
+
+    Test timeout of 60000ms exceeded.
+
+    Error: locator.click: Target page, context or browser has been closed
+    Call log:
+      - waiting for getByRole('button', { name: 'I am committed to start my' })
+
+
+      84 |   await page.getByRole('button', { name: 'Menu' }).click();
+      85 |   await page.getByText('W01 Submit').click();
+    > 86 |   await page.getByRole('button', { name: 'I am committed to start my' }).click();
+         |                                                                          ^
+      87 |   await page.locator('[id="00802LA"]').getByRole('textbox', { name: 'Type your response...' }).fill('This is a test.');
+      88 |   await page.locator('[id="00803LA"]').getByRole('textbox', { name: 'Type your response...' }).fill('This is a test.');
+      89 |   await page.locator('[id="00804LA"]').getByRole('textbox', { name: 'Type your response...' }).fill('This is a test.');
+        at C:\Users\EdgarGeneFabrosDeGuz\Desktop\Playwright Tests\learn-playwright\mobile_tests\mobileModule.test.ts:86:74
+
+    Error Context: test-results\mobileModule-submit-Galaxy-A55\error-context.md
+]]>
+</failure>
+<system-out>
+<![CDATA[
+[[ATTACHMENT|test-results\mobileModule-submit-Galaxy-A55\error-context.md]]
+]]>
+</system-out>
 </testcase>
 </testsuite>
 </testsuites>
