@@ -64,7 +64,6 @@ test('evaluation', async ({ page }) => {
     await page.getByRole('link', { name: ' Complete Evaluation' }).click();
     const page1 = await page1Promise;
     await page1.locator('.QuestionText').first().click();
-    //await page.pause();
     });
 
 test('search', async ({ page }) => {

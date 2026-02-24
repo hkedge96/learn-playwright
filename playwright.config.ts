@@ -37,6 +37,10 @@ const config: PlaywrightTestConfig = {
     },*/
 
   ],
+  reporter: [
+  ['list'],
+  ['junit', { outputFile: 'results.xml' }]
+]
 };
 
 export default defineConfig(config);
