@@ -1,22 +1,31 @@
-import { test as base , chromium} from '@playwright/test';
+import fs from 'fs';
 import { execSync } from 'child_process';
+import { test as base, chromium } from '@playwright/test';
 
+// ✅ CHECK IF ./my-profile EXISTS (in project root)
+if (!fs.existsSync('./my-profile')) {
+  console.log('my-profile not found. Running manual-login.ts...');
+  execSync('node ./manual-login.ts', { stdio: 'inherit' });
+} else {
+  console.log('my-profile exists. Continuing with tests...');
+}
 
-
-// Persistent login (DO NOT CHANGE THIS UNLESS YOU KNOW WHAT YOU ARE DOING)
+// ✅ EXTEND TEST WITH PERSISTENT CONTEXT
 const test = base.extend({
   context: async ({}, use) => {
     const context = await chromium.launchPersistentContext('./my-profile', {
-      headless: false,    
+      headless: false,
     });
     await use(context);
     await context.close();
   },
+
   page: async ({ context }, use) => {
-    const page = context.pages()[0] || await context.newPage();
+    const page = context.pages()[0] ?? await context.newPage();
     await use(page);
   }
 });
+
 
 const website  = process.env.WEBSITE;
 
@@ -152,6 +161,6 @@ test('Submit a test', {tag: ['@regression', '@smoke']}, async ({ page }) => {
 });
 
 // Run the manual login script before all tests
-test.beforeAll(() => {
+/*test.beforeAll(() => {
   execSync('node ./manual-login.ts', { stdio: 'inherit' });
-});
+});*/

@@ -20,7 +20,7 @@ const config: PlaywrightTestConfig = {
   projects: [
     {
       name: 'Desktop Chrome',
-      timeout: 600000, // 60 seconds for each test
+      timeout: 30000, // 30 seconds for each test
       testDir: './tests',
       use: {
         browserName: 'chromium',
