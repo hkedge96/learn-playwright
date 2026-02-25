@@ -1,6 +1,6 @@
 import type { PlaywrightTestConfig } from '@playwright/test';
 import { defineConfig, devices } from '@playwright/test';
-
+import 'dotenv/config';
 const config: PlaywrightTestConfig = {
   
   /*globalSetup: require.resolve('./setup/loginSession.ts'),
@@ -27,21 +27,19 @@ const config: PlaywrightTestConfig = {
       },
     },
     
-    {
-      name: 'Galaxy A55',
+    /*{
+      name: 'Pixel 5',
       testDir: './mobile_tests',
       timeout: 60000, // 60 seconds for each test
       use: {
-        ...devices['Galaxy A55'],
-        headless: false,
+        ...devices['Galaxy A10'],
       },
-    },
+    },*/
 
   ],
   reporter: [
-  ['list'],
-  ['junit', { outputFile: 'results.xml' }]
-]
+    ['html', { open: 'on-failure' }]
+  ],
 };
 
 export default defineConfig(config);

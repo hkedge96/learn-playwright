@@ -5,6 +5,12 @@
     "@types/node": "^25.3.0"
   },
   "dependencies": {
-    "dotenv": "^17.3.1"
+    "dotenv": "^17.3.1",
+    "fast-xml-parser": "^5.3.7"
+  },
+  "scripts": {
+    "test": "playwright test --reporter=junit",
+    "gherkin": "ts-node xml-to-gherkin.ts",
+    "test:gherkin": "npm run test && npm run gherkin"
   }
 }

@@ -1,4 +1,4 @@
-// tests/example.spec.ts (or .js)
+
 import { test as base, devices } from '@playwright/test';
 import { chromium } from 'playwright';
 
