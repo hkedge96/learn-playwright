@@ -14,7 +14,7 @@ if (!fs.existsSync('./my-profile')) {
 const test = base.extend({
   context: async ({}, use) => {
     const context = await chromium.launchPersistentContext('./my-profile', {
-      headless: true,
+      headless: false,
     });
     await use(context);
     await context.close();
@@ -40,7 +40,7 @@ test('Download modules', {tag: ['@regression', '@smoke']}, async ({ page }) => {
   
 
   // Download the module
-  await page.getByRole('button', { name: 'Yes' }).click();
+  //await page.getByRole('button', { name: 'Yes' }).click();
   await page.getByRole('button', { name: 'Add Materials' }).click();
   await page.getByRole('button', { name: 'My Courses' }).click();
   await page.getByRole('article').filter({ hasText: 'BUS116 - Starting a' }).getByLabel('Download ePub').click();
@@ -72,9 +72,9 @@ test('Download modules', {tag: ['@regression', '@smoke']}, async ({ page }) => {
 
   // Click the evaluation link and check if it redirects to the correct page
   const [popup] = await Promise.all([
-  page.waitForEvent('popup'),
-  page.getByRole('link', { name: 'Complete Evaluation' }).click(),
-]);
+        page.waitForEvent('popup'),
+        page.getByRole('link', { name: 'Complete Evaluation' }).click(),
+    ]);
 
   // no actions in popup
   await popup.close(); // or just leave it open if truly irrelevant

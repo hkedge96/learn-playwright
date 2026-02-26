@@ -5,7 +5,7 @@ import 'dotenv/config';
 // This script is used to perform a manual login and save the authentication state to a file.
 (async () => {
   const context = await chromium.launchPersistentContext('./my-profile', {
-    headless: true,
+    headless: false,
   });
 
   const page = context.pages()[0] || await context.newPage();
