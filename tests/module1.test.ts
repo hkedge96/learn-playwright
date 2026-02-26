@@ -2,7 +2,7 @@ import fs from 'fs';
 import { execSync } from 'child_process';
 import { test as base, chromium } from '@playwright/test';
 
-// ✅ CHECK IF ./my-profile EXISTS (in project root)
+// CHECK IF ./my-profile EXISTS (in project root)
 if (!fs.existsSync('./my-profile')) {
   console.log('my-profile not found. Running manual-login.ts...');
   execSync('node ./manual-login.ts', { stdio: 'inherit' });
@@ -10,7 +10,7 @@ if (!fs.existsSync('./my-profile')) {
   console.log('my-profile exists. Continuing with tests...');
 }
 
-// ✅ EXTEND TEST WITH PERSISTENT CONTEXT
+// EXTEND TEST WITH PERSISTENT CONTEXT
 const test = base.extend({
   context: async ({}, use) => {
     const context = await chromium.launchPersistentContext('./my-profile', {
@@ -32,9 +32,12 @@ const website  = process.env.WEBSITE;
 
 test('Download modules', {tag: ['@regression', '@smoke']}, async ({ page }) => {
 
+  /* Download the module and check if the download was successful */
   // Go to the website and log in
   await page.goto(website!);
   await page.locator('a.bookCard').nth(0).click();
+
+  
 
   // Download the module
   await page.getByRole('button', { name: 'Yes' }).click();
@@ -45,6 +48,9 @@ test('Download modules', {tag: ['@regression', '@smoke']}, async ({ page }) => {
   // Check if the download was successful
   await page.locator('h1').click();
 
+
+
+  /* Make a bookmark */
   await page.getByRole('treeitem', { name: 'W01 Read' }).click();
 
   // Make a bookmark
@@ -58,6 +64,9 @@ test('Download modules', {tag: ['@regression', '@smoke']}, async ({ page }) => {
   await page.getByRole('textbox', { name: 'New Name:' }).fill('Study Today');
   await page.getByRole('button', { name: 'OK', exact: true }).click();
 
+
+
+  /* Evaluation URL Redirect */
   await page.locator('button').filter({ hasText: 'Menu' }).click();
   await page.getByRole('treeitem', { name: 'W03 Evaluation' }).click();
 
@@ -67,10 +76,12 @@ test('Download modules', {tag: ['@regression', '@smoke']}, async ({ page }) => {
   page.getByRole('link', { name: 'Complete Evaluation' }).click(),
 ]);
 
-// no actions in popup
+  // no actions in popup
   await popup.close(); // or just leave it open if truly irrelevant
 
 
+
+  /* Search Function */
   await page.getByRole('button', { name: 'Search' }).click();
   await page.getByRole('textbox', { name: 'Search...' }).fill('submit');
   await page.getByRole('textbox', { name: 'Search...' }).press('Enter');
@@ -78,6 +89,10 @@ test('Download modules', {tag: ['@regression', '@smoke']}, async ({ page }) => {
   // Check if the search results are correct
   await page.getByText('Start Here BUS116 - Starting a business assignment in the Submit section at the').click();
 
+
+
+
+  /* Submit Assignment */
   await page.locator('button').filter({ hasText: 'Menu' }).click();
   await page.getByRole('treeitem', { name: 'W01 Submit' }).click();
 
