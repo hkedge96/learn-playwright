@@ -37,6 +37,7 @@ test('Download modules', {tag: ['@regression', '@smoke']}, async ({ page }) => {
     await page.locator('a.bookCard').nth(0).click();
 
     // Download the module
+    await page.getByRole('button', { name: 'Yes' }).click();
     await page.getByRole('button', { name: 'Add Materials' }).click();
     await page.getByRole('button', { name: 'My Courses' }).click();
     await page.getByRole('article').filter({ hasText: 'BUS116 - Starting a' }).getByLabel('Download ePub').click();

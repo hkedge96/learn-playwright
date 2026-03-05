@@ -2,6 +2,8 @@ import type { PlaywrightTestConfig } from '@playwright/test';
 import { defineConfig, devices } from '@playwright/test';
 import 'dotenv/config';
 const config: PlaywrightTestConfig = {
+  testDir: './tests',
+  testMatch: /.*\.test\.ts/,
   
   /*globalSetup: require.resolve('./setup/loginSession.ts'),
 
@@ -17,15 +19,15 @@ const config: PlaywrightTestConfig = {
   workers: 1,              //  only one worker to avoid multiple browsers
   retries: 0, */
 
-  projects: [
+  /*projects: [
     {
       name: 'Desktop Chrome',
-      timeout: 30000, // 30 seconds for each test
+      timeout: 60000, // 30 seconds for each test
       testDir: './tests',
       use: {
         browserName: 'chromium',
       },
-    },
+    },*/
     
     /*{
       name: 'Pixel 5',
@@ -36,10 +38,10 @@ const config: PlaywrightTestConfig = {
       },
     },*/
 
-  ],
+ /* ],
   reporter: [
     ['html', { open: 'on-failure' }]
-  ],
+  ],*/
 };
 
 export default defineConfig(config);

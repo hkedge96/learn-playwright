@@ -2,14 +2,6 @@ import fs from 'fs';
 import { execSync } from 'child_process';
 import { test as base, chromium } from '@playwright/test';
 
-// CHECK IF ./my-profile EXISTS (in project root)
-if (!fs.existsSync('./my-profile')) {
-  console.log('my-profile not found. Running manual-login.ts...');
-  execSync('node ./manual-login.ts', { stdio: 'inherit' });
-} else {
-  console.log('my-profile exists. Continuing with tests...');
-}
-
 // EXTEND TEST WITH PERSISTENT CONTEXT
 const test = base.extend({
   context: async ({}, use) => {
@@ -29,6 +21,15 @@ const test = base.extend({
 
 const website  = process.env.WEBSITE;
 
+test.beforeAll(() => {
+  if (!fs.existsSync('./my-profile')) {
+    console.log('my-profile not found. Running manual-login.ts...');
+    execSync('node ./manual-login.ts', { stdio: 'inherit' });
+  } else {
+    console.log('my-profile exists. Continuing with tests...');
+  }
+});
+
 
 test('Download modules', {tag: ['@regression', '@smoke']}, async ({ page }) => {
 
@@ -40,7 +41,7 @@ test('Download modules', {tag: ['@regression', '@smoke']}, async ({ page }) => {
   
 
   // Download the module
-  //await page.getByRole('button', { name: 'Yes' }).click();
+  await page.getByRole('button', { name: 'Yes' }).click();
   await page.getByRole('button', { name: 'Add Materials' }).click();
   await page.getByRole('button', { name: 'My Courses' }).click();
   await page.getByRole('article').filter({ hasText: 'BUS116 - Starting a' }).getByLabel('Download ePub').click();
