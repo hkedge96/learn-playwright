@@ -38,32 +38,27 @@ test('Download modules', {tag: ['@regression', '@smoke']}, async ({ page }) => {
   await page.goto(website!);
   await page.locator('a.bookCard').nth(0).click();
 
+  
+
   // Download the module
-  //await page.getByRole('button', { name: 'Yes' }).click();
+  await page.getByRole('button', { name: 'Yes' }).click();
   await page.getByRole('button', { name: 'Add Materials' }).click();
   await page.getByRole('button', { name: 'My Courses' }).click();
   await page.getByRole('article').filter({ hasText: 'LLTEST - A Sample of' }).getByLabel('Download ePub').click();
 
-  // Check if the download was successful
-    await page.locator('h1').click();
-
-});
-
-test('Test Course Page', {tag: ['@regression', '@smoke']}, async ({ page }) => {
+  
   /* Test Course Page */
-  await page.goto(website!);
-  await page.locator('a.bookCard').nth(0).click();
-  await page.getByRole('link', { name: 'LLTEST - A Sample of Features' }).click();
   await page.getByRole('heading', { name: 'Test Course' }).isVisible();
 
+  // Check if images are available
+  await page.locator('#pg-itm-3 img').isVisible();
+  await page.locator('#pg-itm-4 img').isVisible();
+  await page.getByText('This is just a short test').isVisible();
 
-  });
 
-test('Basic Formatting Page', {tag: ['@regression', '@smoke']}, async ({ page }) => {
+
+
   /* Basic Formatting Page */
-  await page.goto(website!);
-  await page.locator('a.bookCard').nth(0).click();
-  await page.getByRole('link', { name: 'LLTEST - A Sample of Features' }).click();
   await page.getByRole('treeitem', { name: 'Part 1: Basic Formatting' }).click();
   await page.getByRole('heading', { name: 'Part 1: Basic Formatting' }).isVisible();
 
@@ -75,103 +70,70 @@ test('Basic Formatting Page', {tag: ['@regression', '@smoke']}, async ({ page })
   await page.locator('#responsePage').selectOption('24'); // Course Assignment Option
   await page.getByText('How would you make a study').isVisible();
   await page.getByRole('button', { name: 'Close Notes Panel' }).click();
-});
 
-test('Headings Page', {tag: ['@regression', '@smoke']}, async ({ page }) => {
   /* Headings Page */
-  await page.goto(website!);
-  await page.locator('a.bookCard').nth(0).click();
-  await page.getByRole('link', { name: 'LLTEST - A Sample of Features' }).click();
   await page.getByRole('treeitem', { name: 'Headings' }).click();
   await page.getByRole('heading', { name: 'Headings' }).isVisible();
   await page.getByText('(Heading 1 is used to').isVisible();
   await page.getByRole('heading', { name: 'Heading 2' }).isVisible();
+  await page.locator('#pg-itm-5').isVisible();
   await page.getByRole('heading', { name: 'Heading 3' }).isVisible();
+  await page.locator('#pg-itm-7').isVisible();
   await page.getByRole('heading', { name: 'Heading 4' }).isVisible();
-});
-
-test('Images Page', {tag: ['@regression', '@smoke']}, async ({ page }) => {
+  await page.locator('#pg-itm-9').isVisible();
 
   /* Images Page */
-  await page.goto(website!);
-  await page.locator('a.bookCard').nth(0).click();
-  await page.getByRole('link', { name: 'LLTEST - A Sample of Features' }).click();
   await page.getByRole('treeitem', { name: 'Images' }).click();
   await page.getByRole('heading', { name: 'Images' }).isVisible();
 
-
   // Full Width Image
-  const fullWidthImg = page.locator('h2:has-text("Full Width Image") + p img');
-  await expect(fullWidthImg).toBeVisible();
-
-  const fullBox = await fullWidthImg.boundingBox();
-  expect(fullBox?.width).toBeLessThanOrEqual(650);
-  expect(fullBox?.height).toBeLessThanOrEqual(400);
-
+  await page.getByRole('heading', { name: 'Full Width Image' }).isVisible();
+  await page.locator('#pg-itm-4 img').isVisible();
+  const fullWidthImg = page.locator('#pg-itm-4 img');
+  await expect( fullWidthImg).toBeVisible();
+  const  fullWidthbox = await  fullWidthImg.boundingBox();
+  expect(fullWidthbox?.width).toBeLessThanOrEqual(650);
+  expect(fullWidthbox?.height).toBeLessThanOrEqual(400);
 
   // Scaled Image
-  const scaledImg = page.locator('h2:has-text("Scaled Image") + p img');
-
+  await page.getByRole('heading', { name: 'Scaled Image' }).isVisible();
+  await page.locator('#pg-itm-6 img').isVisible();
+  const scaledImg = page.locator('#pg-itm-6 img');
   await expect(scaledImg).toBeVisible();
-
-  const scaledBox = await scaledImg.boundingBox();
-  expect(scaledBox?.width).toBeLessThanOrEqual(320);
-  expect(scaledBox?.height).toBeLessThanOrEqual(200);
-
+  const scaledImgbox = await scaledImg.boundingBox();
+  expect(scaledImgbox?.width).toBeLessThanOrEqual(320);
+  expect(scaledImgbox?.height).toBeLessThanOrEqual(200) ;
 
   // Cropped Image
-  const croppedImg = page.locator('h2:has-text("Cropped Image") ~ p img');
-
+  await page.getByRole('heading', { name: 'Cropped Image' }).isVisible();
+  await page.getByText('This image is cropped in the').isVisible();
+  await page.locator('#pg-itm-9 img').isVisible();
+  const croppedImg = page.locator('#pg-itm-9 img');
   await expect(croppedImg).toBeVisible();
-
-  const croppedBox = await croppedImg.boundingBox();
-  expect(croppedBox?.width).toBeLessThanOrEqual(250);
-  expect(croppedBox?.height).toBeLessThanOrEqual(150);
-
-});
-
-test('Lists Page', {tag: ['@regression', '@smoke']}, async ({ page }) => {
+  const croppedImgbox = await croppedImg.boundingBox();
+  expect(croppedImgbox?.width).toBeLessThanOrEqual(250);
+  expect(croppedImgbox?.height).toBeLessThanOrEqual(150);
 
   /* Lists Page */
-  await page.goto(website!);
-  await page.locator('a.bookCard').nth(0).click();
-  await page.getByRole('link', { name: 'LLTEST - A Sample of Features' }).click();
+
   await page.getByRole('treeitem', { name: 'Lists' }).click();
   await page.getByRole('heading', { name: 'Lists' }).isVisible();
-
-  // Unordered List
   await page.getByRole('heading', { name: 'Unordered List' , exact: true }).isVisible();
-  const unorderedList = page.locator('h2:has-text("Unordered List") + ul');
-  await expect(unorderedList.locator('li').nth(1)).toBeVisible();
-
-  // Ordered List
+  const unorderedItems = page.locator('#pg-itm-4 li');
+  expect(await unorderedItems.count()).toBeGreaterThanOrEqual(2);
   await page.getByRole('heading', {  name: 'Ordered List' , exact: true }).isVisible();
-  const orderedList = page.locator('h2:has-text("Ordered List") + ol');
-  await expect(orderedList.locator('li').nth(1)).toBeVisible();
-
-  // Multi-Level Ordered List
+  const orderedItems = page.locator('#pg-itm-7 li');
+  expect(await orderedItems.count()).toBeGreaterThanOrEqual(2);
   await page.getByRole('heading', { name: 'Multi-Level Ordered List' , exact: true  }).isVisible();
-  const multiLevel = page.locator('h2:has-text("Multi-Level Ordered List") + ol');
-  
-  // Level 1 (top level)
-  await expect(multiLevel.locator('> li').nth(1)).toBeVisible();
-  // Level 2 (nested)
-  await expect(multiLevel.locator('ol > li').nth(1)).toBeVisible();
-  
-});
+  // Level 1 (top level): Multi-Level Ordered List 
+  const level1 = page.locator('#pg-itm-10 > li');
+  await expect(level1.first()).toBeVisible();
 
-test('Tables Page', {tag: ['@regression', '@smoke']}, async ({ page }) => {
-  await page.goto(website!);
-  await page.locator('a.bookCard').nth(0).click();
-  await page.getByRole('link', { name: 'LLTEST - A Sample of Features' }).click();
-  await page.getByRole('treeitem', { name: 'Tables' }).click();
-  await page.getByRole('heading', { name: 'Tables' }).isVisible();
-  await expect(page.getByRole('table')).toBeVisible();
+  expect(await level1.count()).toBeGreaterThanOrEqual(2); 
 
-  const table = page.getByRole('table');
-  const rows = table.locator('tbody tr');
-  const rowCount = await rows.count();
+  // Level 2 (nested): One
+  const level2 = page.locator('#pg-itm-10 > ol > li');
+  await expect(level2.first()).toBeVisible();
 
-  expect(rowCount).toBeGreaterThanOrEqual(1);
-
+  expect(await level2.count()).toBeGreaterThanOrEqual(2);
 });

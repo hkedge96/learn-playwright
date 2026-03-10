@@ -1,47 +1,16 @@
 import type { PlaywrightTestConfig } from '@playwright/test';
-import { defineConfig, devices } from '@playwright/test';
+import { defineConfig} from '@playwright/test';
 import 'dotenv/config';
-const config: PlaywrightTestConfig = {
+
+
+export default defineConfig({
   testDir: './tests',
-  testMatch: /.*\.test\.ts/,
-  
-  /*globalSetup: require.resolve('./setup/loginSession.ts'),
-
-  // 2) Reuse the saved auth state in all tests
+  workers: 1,
+  fullyParallel: false,
   use: {
-    
-    storageState: 'auth.json',
-    headless: false
-    baseURL: 'https://study-test.byupathway.edu/' // optional but nice
-    
+    headless: true,
   },
-    
-  workers: 1,              //  only one worker to avoid multiple browsers
-  retries: 0, */
-
-  /*projects: [
-    {
-      name: 'Desktop Chrome',
-      timeout: 60000, // 30 seconds for each test
-      testDir: './tests',
-      use: {
-        browserName: 'chromium',
-      },
-    },*/
-    
-    /*{
-      name: 'Pixel 5',
-      testDir: './mobile_tests',
-      timeout: 60000, // 60 seconds for each test
-      use: {
-        ...devices['Galaxy A10'],
-      },
-    },*/
-
- /* ],
   reporter: [
-    ['html', { open: 'on-failure' }]
-  ],*/
-};
-
-export default defineConfig(config);
+    ['html', { open: 'always' }]
+  ],
+});
